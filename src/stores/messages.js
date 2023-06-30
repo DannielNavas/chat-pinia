@@ -103,6 +103,19 @@ export default defineStore("messages", {
         .filter((message) => !message.read).length;
     },
   },
+  actions: {
+    // TODO: se hace por medio de una funcion normal para poder aceder a this
+    addMessage(channelId, message) {
+      this.messages.push({
+        id: Math.random(),
+        author: 1,
+        channelId,
+        message,
+        timestamp: new Date().toLocaleTimeString(),
+        read: false,
+      });
+    },
+  },
 });
 
 // import { defineStore } from 'pinia'

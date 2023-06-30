@@ -29,6 +29,7 @@ const messagesView = computed(() =>
 );
 
 const addMessage = () => {
+  // TODO: valores del formulario que cambiaran el estado de messagesStore
   messagesStore.addMessage(channelId.value, message.value);
   message.value = "";
 };
