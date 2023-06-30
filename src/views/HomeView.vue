@@ -1,42 +1,46 @@
 <script setup>
-import { RouterView, RouterLink } from 'vue-router'
-import InputSearch from '@/components/InputSearch.vue'
-import ProfileCard from '@/components/ProfileCard.vue'
-import ChatItem from '@/components/ChatItem.vue'
-import { ref } from 'vue'
-import useProfileStore from '@/stores/profile.js'
-import useChannelsStore from '@/stores/channels.js'
+import ChatItem from "@/components/ChatItem.vue";
+import InputSearch from "@/components/InputSearch.vue";
+import ProfileCard from "@/components/ProfileCard.vue";
+// TODO: por estandar se usa: useNombreStore
+import useChannelsStore from "@/stores/channels.js";
+import useProfileStore from "@/stores/profile.js";
+import { ref } from "vue";
+import { RouterLink, RouterView } from "vue-router";
 
-const profileStore = useProfileStore()
-const channelsStore = useChannelsStore()
+// TODO: con esto se obtiene el store de profile y channels
+const profileStore = useProfileStore();
+const channelsStore = useChannelsStore();
 
-const search = ref('')
+const search = ref("");
 </script>
 
 <template>
-<div class="home">
-  <aside>
-    <InputSearch v-model="search" />
-    <ProfileCard
-      :avatar="profileStore.avatar"
-      :username="profileStore.username"
-      :status="profileStore.status"
-    />
-    <RouterLink to="/" class="channels-title">Canales <Icon icon="carbon:hashtag" /></RouterLink>
-    <div class="channels">
-      <ChatItem
-        v-for="channel in channelsStore.getChannels(search)"
-        :key="channel.id"
-        :id="channel.id"
-        :name="channel.name"
-        :messages="channel.messages"
+  <div class="home">
+    <aside>
+      <InputSearch v-model="search" />
+      <ProfileCard
+        :avatar="profileStore.avatar"
+        :username="profileStore.username"
+        :status="profileStore.status"
       />
-    </div>
-  </aside>
-  <main>
-    <RouterView />
-  </main>
-</div>
+      <RouterLink to="/" class="channels-title"
+        >Canales <Icon icon="carbon:hashtag"
+      /></RouterLink>
+      <div class="channels">
+        <ChatItem
+          v-for="channel in channelsStore.getChannels(search)"
+          :key="channel.id"
+          :id="channel.id"
+          :name="channel.name"
+          :messages="channel.messages"
+        />
+      </div>
+    </aside>
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>

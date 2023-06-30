@@ -1,6 +1,7 @@
 <script setup>
-import useProfileStore from '@/stores/profile.js';
-const profileStore = useProfileStore()
+// TODO: se usa directo el store de profile dado la reactividad de vue 3 y el uso de composition api
+import useProfileStore from "@/stores/profile.js";
+const profileStore = useProfileStore();
 </script>
 
 <template>
