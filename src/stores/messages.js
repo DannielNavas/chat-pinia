@@ -93,6 +93,16 @@ export default defineStore("messages", {
       },
     ],
   }),
+  getters: {
+    findMessagesByChannelId: (state) => (channelId) => {
+      return state.messages.filter((message) => message.channelId === channelId);
+    },
+    countUnreadMessagesByChannelId: (state) => (channelId) => {
+      return state
+        .findMessagesByChannelId(channelId)
+        .filter((message) => !message.read).length;
+    },
+  },
 });
 
 // import { defineStore } from 'pinia'

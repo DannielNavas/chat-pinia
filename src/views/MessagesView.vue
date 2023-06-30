@@ -1,51 +1,54 @@
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import MessageItem from '@/components/MessageItem.vue'
-import useMessagesStore from '@/stores/messages.js'
-import useContactsStore from '@/stores/contacts.js'
+import MessageItem from "@/components/MessageItem.vue";
+import useContactsStore from "@/stores/contacts.js";
+import useMessagesStore from "@/stores/messages.js";
+import { computed, reactive, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
-const route = useRoute()
-const messagesStore = useMessagesStore()
-const contactsStore = useContactsStore()
+const route = useRoute();
+const messagesStore = useMessagesStore();
+const contactsStore = useContactsStore();
 
-const end = ref(null)
-const channelId = ref(null)
-const title = ref('')
-const people = reactive([])
-const message = ref('')
+const end = ref(null);
+const channelId = ref(null);
+const title = ref("");
+const people = reactive([]);
+const message = ref("");
 
-const messagesView = computed(() => messagesStore.findMessagesByChannelId(channelId.value).map((message) => {
-  const author = contactsStore.getContactById(message.author)
-  if (!author) return message;
+// TODO: consulta desde pinia messagesStore y contactsStore.getContactById
+const messagesView = computed(() =>
+  messagesStore.findMessagesByChannelId(channelId.value).map((message) => {
+    const author = contactsStore.getContactById(message.author);
+    if (!author) return message;
     return {
-    ...message,
-    author,
-    self: author.id === 1
-  }
-}))
+      ...message,
+      author,
+      self: author.id === 1,
+    };
+  })
+);
 
 const addMessage = () => {
-  messagesStore.addMessage(channelId.value, message.value)
-  message.value = ''
-}
+  messagesStore.addMessage(channelId.value, message.value);
+  message.value = "";
+};
 
 const scrollToBottom = () => {
   end.value?.scrollIntoView({
-    behavior: 'smooth'
-  })
-}
+    behavior: "smooth",
+  });
+};
 
 watch(
   () => route.params.id,
   (id) => {
-    channelId.value = parseInt(id)
-    scrollToBottom()
+    channelId.value = parseInt(id);
+    scrollToBottom();
   },
   { immediate: true }
-)
+);
 
-scrollToBottom()
+scrollToBottom();
 </script>
 
 <template>
@@ -53,11 +56,7 @@ scrollToBottom()
     <header>
       <h2>{{ title }}</h2>
       <div class="people-list">
-        <div
-          class="people-item"
-          v-for="p in people"
-          :key="p.id"
-        >
+        <div class="people-item" v-for="p in people" :key="p.id">
           <img :src="p.avatar" :alt="p.name" />
         </div>
       </div>
