@@ -93,6 +93,7 @@ export default defineStore("messages", {
       },
     ],
   }),
+  // TODO: ingresa el state
   getters: {
     findMessagesByChannelId: (state) => (channelId) => {
       return state.messages.filter((message) => message.channelId === channelId);
@@ -103,6 +104,8 @@ export default defineStore("messages", {
         .filter((message) => !message.read).length;
     },
   },
+  //TODO: utiliza la reactividad y solo se muta como algo reactivo como en cualquier parte de vue js
+  // TODO: las actions tienen definicion de funciones sin arrow funtions porque no existe elacceso a this
   actions: {
     // TODO: se hace por medio de una funcion normal para poder aceder a this
     addMessage(channelId, message) {
