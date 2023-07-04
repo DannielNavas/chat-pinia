@@ -27,3 +27,12 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Diferencias entre vuex y pinia
+
+no existen las mutaciiones explicitas
+soporte para typescript
+no mas strings para lamar funciones
+todos los store son dinamicos
+todos los store son modulos
+no mas la necesidad de espacios de nombres
